@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <header>
+            <h1>
+                Graphic depiction of CSS3 <dfn>Box Model</dfn>
+            </h1>
+        </header>
+        <main>
+            <div class="container">
+                <p class="margin-label"><small>(outer container margin)</small></p>
+                <p class="padding-label"><small>(outer container padding)</small></p>
+                <div class="inner">
+                    <p class="margin-label"><small>(inner container margin)</small></p>
+                    <p class="padding-label"><small>(inner container padding)</small></p>
+                    <p id="inner-content">content element, child of inner, no margin or padding</p>
+                </div>
+            </div>
+        </main>
+    </body>
+    <style>
+        :root {
+            --margin-highlight: 30px;
+            --padding-highlight: 30px;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            padding: 2rem;
+            text-align: center;
+            background-color: rgb(6, 37, 49);
+        }
+
+        h1 {
+            color: white;
+        }
+
+        main {
+            width: 95%;
+            margin: 4rem auto;
+        }
+
+        #inner-content {
+            background-color: black;
+            color: white;
+        }
+
+        .container {
+            background-color: #cccccc;
+            padding: var(--padding-highlight);
+            margin: var(--margin-highlight);
+            border: 4px solid black;
+            outline: 4px dashed green;
+            outline-offset: var(--margin-highlight);
+            position: relative;
+        }
+
+        .inner {
+            background-color: #dddddd;
+            padding: var(--padding-highlight);
+            margin: var(--margin-highlight);
+            border: 2px solid red;
+            outline: 2px dashed blue;
+            outline-offset: var(--margin-highlight);
+            position: relative;
+            text-align: center;
+        }
+
+        .margin-label {
+            position: absolute;
+            color: darkviolet;
+            top: -25px;
+            left: -17px;
+        }
+
+        .padding-label {
+            position: absolute;
+            color: darkorange;
+            top: 2px;
+            left: 2px;
+        }
+    </style>
+
+</html>
