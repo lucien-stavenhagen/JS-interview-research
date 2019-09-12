@@ -14,6 +14,7 @@
                 Graphic depiction of CSS3 <dfn>Box Model</dfn>
             </h1>
         </header>
+        <h3>(surrounding body area)</h3>
         <main>
             <div class="container">
                 <p class="margin-label"><small>(outer container margin)</small></p>
@@ -25,6 +26,7 @@
                 </div>
             </div>
         </main>
+        <h3>(surrounding body area)</h3>
     </body>
     <style>
         :root {
@@ -37,6 +39,10 @@
             margin: 0;
         }
 
+        body {
+            text-align: center;
+        }
+
         header {
             padding: 2rem;
             text-align: center;
@@ -45,6 +51,10 @@
 
         h1 {
             color: white;
+        }
+
+        h3 {
+            margin: 1.5rem;
         }
 
         main {
