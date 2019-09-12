@@ -13,6 +13,7 @@
             <h1>
                 Graphic depiction of CSS3 <dfn>Box Model</dfn>
             </h1>
+            <h2>with a bonus depiction of <dfn>margin collapse</dfn></h2>
         </header>
         <h3>(surrounding body area)</h3>
         <main>
@@ -20,9 +21,14 @@
                 <p class="margin-label"><small>(outer container margin)</small></p>
                 <p class="padding-label"><small>(outer container padding)</small></p>
                 <div class="inner">
-                    <p class="margin-label"><small>(inner container margin)</small></p>
+                    <p class="margin-label"><small>(inner containers margin)</small></p>
                     <p class="padding-label"><small>(inner container padding)</small></p>
-                    <p id="inner-content">content element, child of inner, no margin or padding</p>
+                    <p id="inner-content">content element, child of upper inner, no margin or padding</p>
+                </div>
+                <div class="inner">
+                    <p class="margin-label"><small>(inner container margins overlap here)</small></p>
+                    <p class="padding-label"><small>(inner container padding)</small></p>
+                    <p id="inner-content">content element, child of lower inner, no margin or padding</p>
                 </div>
             </div>
         </main>
@@ -49,7 +55,8 @@
             background-color: rgb(6, 37, 49);
         }
 
-        h1 {
+        h1,
+        h2 {
             color: white;
         }
 
@@ -78,10 +85,10 @@
         }
 
         .inner {
-            background-color: #dddddd;
+            background-color: rgba(255, 255, 255, .5);
             padding: var(--padding-highlight);
             margin: var(--margin-highlight);
-            border: 2px solid red;
+            border: 2px solid rgba(255, 0, 0, .5);
             outline: 2px dashed blue;
             outline-offset: var(--margin-highlight);
             position: relative;
