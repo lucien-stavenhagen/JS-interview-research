@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Box Sizing</title>
+    </head>
+
+    <body>
+        <header>
+            <h1>border-box vs content-box sizing demo</h1>
+        </header>
+        <section class="description">
+            <h3 style="text-align: center;">Description</h3>
+            <p>The dashed inner box is 200 x 200 pixels (sized with CSS height and width). The box with the thick
+                blue
+                border has a 15 pixel thick border
+                and 30 pixels of padding, and is also 200 x 200 pixels, also specified with CSS height and width .
+                The
+                button toggles
+                box-sizing between border-box and content-box for the
+                blue-bordered box.</p>
+        </section>
+        <main>
+            <section class="demo-area">
+                <button id="togglesizing">Toggle</button>
+                <div id="display-state"></div>
+                <div class="container">
+                    <div id="mybox">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt pariatur perspiciatis
+                            molestias
+                            deserunt eos facere soluta consectetur fugiat tenetur atque delectus voluptatem, mollitia
+                            odio
+                            provident! Expedita ab dicta, culpa voluptas iste ea inventore. Pariatur laborum quia,
+                            veniam
+                            aliquam ullam eius qui maiores fugiat! Quibusdam, laborum. Culpa officia obcaecati in. Eaque
+                            autem delectus laboriosam ut molestias nostrum iste. Molestias optio in, qui porro ea
+                            dolorem
+                            cupiditate aspernatur neque. Cupiditate reiciendis sit perferendis numquam, dolorum cum
+                            nisi!
+                            Hic error ipsa odio velit temporibus fugit in, delectus ducimus voluptas sint
+                            necessitatibus,
+                            quia harum iusto libero dignissimos ex illo, eveniet exercitationem ea quae maiores?</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <h2>&copy; LS Productions, 2019</h2>
+        </footer>
+    </body>
+    <style>
+        :root {
+            --my-height: 300px;
+            --my-width: 300px;
+            --box-hack: 299px;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.5rem;
+        }
+
+        main {
+            width: 60%;
+            margin: auto;
+            text-align: center;
+        }
+
+        header,
+        footer {
+            background-color: #7ccbff;
+            text-align: center;
+        }
+
+        h1,
+        h2 {
+            padding: 2rem;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        h3 {
+            padding: .3rem;
+        }
+
+        .description {
+            text-align: left;
+            padding: 1rem;
+            background-image: linear-gradient(to right, rgb(129, 180, 204), rgb(179, 230, 254));
+        }
+
+        .demo-area {
+            padding-bottom: 5rem;
+            position: relative;
+            background-image: linear-gradient(to right, rgb(19, 70, 94), rgb(119, 170, 194));
+            z-index: 0;
+        }
+
+        .container {
+            box-sizing: border-box;
+            width: 60%;
+            height: var(--my-height);
+            width: var(--my-width);
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 5rem;
+            border: 10px dashed rgba(255, 0, 0, .5);
+            position: relative;
+        }
+
+        .border-size {
+            box-sizing: border-box;
+        }
+
+        #togglesizing {
+            padding: .5rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            border: 2px solid grey;
+            position: relative;
+            margin: 2px 0;
+        }
+
+        #togglesizing:hover {
+            cursor: pointer;
+            background-color: #444444;
+            color: white;
+        }
+
+        #display-state {
+            background-image: linear-gradient(to right, rgb(189, 170, 194), rgb(239, 220, 244));
+            padding: 1rem;
+        }
+
+        #mybox {
+            position: absolute;
+            background-color: white;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: var(--my-height);
+            width: var(--my-width);
+            border-width: 15px;
+            border-color: rgba(0, 0, 255);
+            border-style: solid;
+            padding: 30px;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        #mybox p {
+            border: 1px solid black;
+            max-height: var(--box-hack);
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        const isContent = `<h3>content-box sizing</h3>
+                            <p>Padding and border are <strong>not</strong> included in size calculation. 
+                            Notice how the content size matches the <q>template</q> inner box, and the
+                            border and padding are outside.</p>`;
+        const isBorder = `<h3>border-box sizing</h3>
+                            <p>Padding and border <strong>are</strong> included in size calculation. 
+                            Now the entire blue-bordered box fits fully inside the <q>template</q> inner box
+                            and the content size is correspondingly reduced to fit.</p>`;
+
+        const button = document.getElementById("togglesizing");
+        const showstate = document.getElementById("display-state");
+        showstate.innerHTML = isContent;
+
+        const Sizing = () => {
+            let s = true;
+            return () => {
+                const box = document.getElementById("mybox");
+                if (s) {
+                    box.style.boxSizing = "border-box";
+                    showstate.innerHTML = isBorder;
+                } else {
+                    box.style.boxSizing = "content-box"
+                    showstate.innerHTML = isContent;
+                }
+                s = !s;
+            }
+        }
+        const toggleSizing = Sizing();
+        button.addEventListener("click", toggleSizing);
+    </script>
+
+</html>
