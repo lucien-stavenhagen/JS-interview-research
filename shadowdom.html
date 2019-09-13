@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Shadow DOM</title>
+    </head>
+
+    <body>
+        <div id="regular-entry-point"></div>
+        <div id="shadow-host"></div>
+        <section class="unstyled">
+            <h1>Unstyled Section</h1>
+            <p>Note that the styling here is only affected by the <q>regular menubar template</q>, which is mounted
+                normally with appendChild() on a separate div element. The styling on the <q>shadow menubar template</q>
+                is encapsulated in the shadow DOM and doesn't percolate into the global styling.</p>
+            </p>
+            <ul>
+                <li><a href="#">Home unstyled</a></li>
+                <li><a href="#">About unstyled</a></li>
+                <li><a href="#">Contact unstyled</a></li>
+            </ul>
+        </section>
+        </main>
+    </body>
+    <template id="shadow-menubar">
+        <div id="mbcontainer">
+            <h1>Shadow Menubar Template</h1>
+            <p>Custom styled and appended using shadow DOM</p>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
+
+            h1,
+            p {
+                text-transform: uppercase;
+                text-align: center;
+            }
+
+            ul {
+                list-style-type: none;
+                width: 30%;
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+            }
+
+
+            a {
+                text-decoration: none;
+                font-size: 1.3rem;
+            }
+
+            a:hover {
+                background-color: rgba(0, 0, 0)
+            }
+
+            #mbcontainer {
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+                background-color: turquoise;
+                padding: 1rem;
+            }
+
+            @media (max-width:768px) {
+
+                #mbcontainer,
+                ul {
+                    flex-direction: column;
+                }
+            }
+        </style>
+    </template>
+    <template id="shadow-section">
+        <div id="shadow-section-container">
+            <h1>shadow section also in the shadow DOM</h1>
+            <p>note how this shares the styling of the shadow menubar template.</p>
+            <ul>
+                <li><a href="#">list item one</a></li>
+                <li><a href="#">list item two</a></li>
+                <li><a href="#">list item three</a></li>
+            </ul>
+        </div>
+        <style>
+            #shadow-section-container {
+                background-color: deepskyblue;
+            }
+        </style>
+    </template>
+    <template id="regular-menubar">
+        <div id="mbcontainer">
+            <h1>Regular Menubar Template</h1>
+            <p>Appended to the regular DOM</p>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        <style>
+            h1,
+            p,
+            a {
+                text-transform: lowercase;
+                text-align: center;
+                font-family: fantasy, sans-serif;
+            }
+
+            ul {
+                list-style-type: circle;
+                width: 30%;
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+            }
+
+            li {
+                margin: 5px;
+            }
+
+            a {
+                font-size: 1rem;
+            }
+
+            a:hover {
+                background-color: rgba(0, 0, 0)
+            }
+
+            #mbcontainer {
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+                background-color: darkturquoise;
+                padding: 1rem;
+            }
+
+            @media (max-width:768px) {
+
+                #mbcontainer,
+                ul {
+                    flex-direction: column;
+                }
+            }
+        </style>
+    </template>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script>
+        //
+        // get all the templates
+        //
+        let shadowMenu = document.querySelector("#shadow-menubar");
+        let shadowSection = document.querySelector("#shadow-section");
+
+        let regularMenu = document.querySelector("#regular-menubar");
+        //
+        // get the entry-point divs where the
+        // shadow dom and other trees will be
+        // mounted
+        //
+        let shadowHost = document.getElementById("shadow-host");
+        let regularEntryPoint = document.getElementById("regular-entry-point");
+        //
+        // first create the elements that'll go under
+        // the shadow DOM tree
+        //
+        let shadowMenuElement = document.createElement("div");
+        shadowMenuElement.appendChild(shadowMenu.content);
+        let shadowSectionElement = document.createElement("section");
+        shadowSectionElement.appendChild(shadowSection.content);
+
+        //
+        // now create the elements that'll go on the DOM
+        // normally
+        //
+        let regularMenuElement = document.createElement("div");
+        regularMenuElement.appendChild(regularMenu.content);
+
+        //
+        // append the normal div 
+        regularEntryPoint.appendChild(regularMenuElement);
+        //
+        // now attach the shadow DOM node to the 
+        // shadow DOM host element
+        //
+        let shadow = shadowHost.attachShadow({ mode: 'open' });
+        shadow.appendChild(shadowMenuElement);
+        shadow.appendChild(shadowSectionElement);
+    </script>
+
+</html>
