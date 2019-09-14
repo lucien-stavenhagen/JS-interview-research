@@ -14,7 +14,8 @@
         <section class="unstyled">
             <h1>Unstyled Section</h1>
             <p>Note that the styling here is only affected by the <q>regular menubar template</q>, which is mounted
-                normally with appendChild() on a separate div element. The styling on the <q>shadow menubar template</q>
+                normally on the <q>light</q> dom with a separate div element. The styling on the <q>shadow menubar
+                    template</q>
                 is encapsulated in the shadow DOM and doesn't percolate into the global styling.</p>
             </p>
             <ul>
@@ -28,7 +29,7 @@
     <template id="shadow-menubar">
         <div id="mbcontainer">
             <h1>Shadow Menubar Template</h1>
-            <p>Custom styled and appended using shadow DOM</p>
+            <p>Custom styled and mounted on the shadow DOM</p>
             <ul>
                 <li><a href="#">Home</a></li>
                 <li><a href="#">About</a></li>
@@ -39,6 +40,7 @@
             * {
                 padding: 0;
                 margin: 0;
+                box-sizing: border-box;
             }
 
             h1,
@@ -58,7 +60,8 @@
 
             a {
                 text-decoration: none;
-                font-size: 1.3rem;
+                font-size: 1.4rem;
+                padding: 10px 0;
             }
 
             a:hover {
@@ -69,7 +72,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-evenly;
-                background-color: turquoise;
+                background-color: rgb(236, 127, 100);
                 padding: 1rem;
             }
 
@@ -85,16 +88,34 @@
     <template id="shadow-section">
         <div id="shadow-section-container">
             <h1>shadow section also in the shadow DOM</h1>
-            <p>note how this shares the styling of the shadow menubar template.</p>
-            <ul>
-                <li><a href="#">list item one</a></li>
-                <li><a href="#">list item two</a></li>
-                <li><a href="#">list item three</a></li>
+            <p>note how this shares some of the styling of the shadow menubar template.</p>
+            <ul id="section-ul">
+                <li><a href="#">one</a></li>
+                <li><a href="#">two</a></li>
+                <li><a href="#">three</a></li>
             </ul>
         </div>
         <style>
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+                text-align: center;
+            }
+
+            #section-ul {
+                display: block;
+                width: 50%;
+                margin: auto;
+            }
+
+            #section-ul li {
+                display: inline-block;
+                margin: 15px;
+            }
+
             #shadow-section-container {
-                background-color: deepskyblue;
+                background-color: rgb(253, 208, 83);
             }
         </style>
     </template>
@@ -159,6 +180,11 @@
         body {
             margin: 0;
             padding: 0;
+            background-color: wheat;
+        }
+
+        #shadow-host {
+            border: 5px solid grey;
         }
     </style>
     <script>
